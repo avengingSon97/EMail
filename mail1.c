@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdbool.h>
 
+
+// pointer stores the memory address of another variable
 bool isValidEmail(char* email);
 
 int main ()
@@ -79,6 +81,7 @@ bool isValidEmail(char* email)
             // strchr to find first occurence
             //char* declares a pointer to a char
             // pointer dot to store result of strchr
+            //strchr finds first occurence of a char.
             char* dot = strchr(email, '.');
 
             if (dot != NULL && dot > strchr(email, '@'))
