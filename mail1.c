@@ -1,8 +1,6 @@
-
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-
 
 // pointer stores the memory address of another variable
 bool isValidEmail(char* email);
@@ -42,12 +40,10 @@ int main ()
 bool isValidEmail(char* email)
 {
     int atCount = 0;
-    int dot1 = 0;
-    if(strlen(email) == 0)
-    {
-        return false;
-    }
 
+    // anzahl von '.'
+    int dotSum = 0;
+    
     //strlen --> iterating through the entire string.
     for (int i = 0; i < strlen(email); i++)
     {
@@ -56,12 +52,40 @@ bool isValidEmail(char* email)
         if (email[i] == '@')
         {
             atCount ++; 
-           if (email[i+1] == '.')
+        } 
+        if (email[i] == '.')
+        {
+            dotSum++;
+        }  
+        if (email[i] == '.' && email[i+1] == '.') 
             {
                 return false;
             }
-            
-        }    
+        if (email[i] == '.' && email[i+1] == '@')
+        {
+            return false;
+        }
+        if (email[i] == '.' && email[i-1] == '@')
+        {
+            return false;
+        }
+        if (email[i] == '.' && email[i+1] == '\0')
+        {
+            return false;
+        }
+        if (email[i] == '.' && email[i+2] == '\0')
+        {
+            return false;
+        }
+        if (email[i] == '@' && email[i+1] == '\0')
+        {
+            return false;
+        }
+        if (email[i] == '\0' && email[i-2] == '.')
+        {
+            return false;
+        }
+
         // checking for char that are not permitted 
         if (email[i] == ' ' || email[i] == '!' || email[i] == '#' 
             || email[i] == ':' || email[i] == ';' || email[i] == '<' 
@@ -71,46 +95,31 @@ bool isValidEmail(char* email)
             || email [i] == '$' || email [i] == '%' )
         {
             return false;
-        }
+        }    
     }
 
     if (atCount == 1)
     {
-        if (email[0] != '@')
+        if (email[0] != '@' && email[0] != '.')
         {
             // strchr to find first occurence
-            //char* declares a pointer to a char
+            //char* declares a pointer to a char named dot
             // pointer dot to store result of strchr
-            //strchr finds first occurence of a char.
+
             char* dot = strchr(email, '.');
-
-            if (dot != NULL && dot > strchr(email, '@'))
-            {
-                return true;
-            }
-
-            if (dot < strchr(email, '@') && email[0] != '.')
-            {
-                return true;
-            }
-
-            if (dot > 2)
+            
+            if (dotSum == '\0')
+                {
+                    return false;
+                }
+            if (strlen(dot+1)<2)
             {
                 return false;
             }
-
+           return true;
+           
         }
-       
-        if (strstr(email, "@gmail.") || strstr(email, "@outlook.") || strstr(email, "@yahoo.") || strstr(email, "@hotmail.")) 
-        {
-            return true;
-        } 
-        else 
-        {
-            return false;
-        }
-        
-    }
-    
-    return false; // If any of the conditions failed
+        return false; // If any of the conditions failed  
+    } 
+ return 0;
 }
